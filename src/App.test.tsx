@@ -92,3 +92,51 @@ describe("Expenses", () => {
     expect(screen.queryByText("Spent so far: $400")).toBeInTheDocument;
   });
 });
+
+describe("Budget", () => {
+  test("Set Budget", () => {
+    render(<App />);
+    const budgetInput = screen.getByPlaceholderText("Enter Budget");
+    const budgetButton = screen.getByText("Set Budget");
+    fireEvent.change(budgetInput, { target: { value: 100000 } });
+    fireEvent.click(budgetButton);
+
+    expect(screen.queryByText("Current Budget: 100000")).toBeInTheDocument;
+  });
+
+  test("Update Budget", () => {
+    render(<App />);
+    const budgetInput = screen.getByPlaceholderText("Enter Budget");
+    const budgetButton = screen.getByText("Set Budget");
+    fireEvent.change(budgetInput, { target: { value: 100000 } });
+    fireEvent.click(budgetButton);
+
+    expect(screen.queryByText("Current Budget: 100000")).toBeInTheDocument;
+
+    fireEvent.change(budgetInput, { target: { value: 200000 } });
+    fireEvent.click(budgetButton);
+
+    expect(screen.queryByText("Current Budget: 200000")).toBeInTheDocument;
+  });
+
+  test("Exceed Budget", () => {
+    render(<App />);
+    const budgetInput = screen.getByPlaceholderText("Enter Budget");
+    const budgetButton = screen.getByText("Set Budget");
+    fireEvent.change(budgetInput, { target: { value: 100 } });
+    fireEvent.click(budgetButton);
+
+    expect(screen.queryByText("Current Budget: 100")).toBeInTheDocument;
+
+    const expenseName = screen.getByPlaceholderText("Enter expense name");
+    const expenseCost = screen.getByPlaceholderText("Enter expense cost");
+    const addExpenseButton = screen.getByText("Save");
+
+    fireEvent.change(expenseName, { target: { value: "Private Jet Fuel" } });
+    fireEvent.change(expenseCost, { target: { value: 500 } });
+    fireEvent.click(addExpenseButton);
+
+    expect(screen.queryByText("Remaining:-$400")).toBeInTheDocument;
+    expect(screen.queryByText("Spent so far: $500")).toBeInTheDocument;
+  });
+});
