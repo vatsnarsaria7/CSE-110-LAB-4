@@ -17,9 +17,6 @@ describe("Expenses", () => {
     fireEvent.change(expenseCost, { target: { value: 50000 } });
     fireEvent.click(addExpenseButton);
 
-    const expRemaining = "Remaining: $50000";
-    const expSpent = "Spent so far: $50000";
-
     expect(screen.queryByText("Private Jet Fuel")).toBeInTheDocument;
     expect(screen.queryByText("Remaining: $50000")).toBeInTheDocument;
     expect(screen.queryByText("Spent so far: $50000")).toBeInTheDocument;
@@ -138,5 +135,6 @@ describe("Budget", () => {
 
     expect(screen.queryByText("Remaining:-$400")).toBeInTheDocument;
     expect(screen.queryByText("Spent so far: $500")).toBeInTheDocument;
+    ADDING_TO_FAIL_TEST;
   });
 });
