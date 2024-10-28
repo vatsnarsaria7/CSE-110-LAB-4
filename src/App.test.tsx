@@ -135,6 +135,6 @@ describe("Budget", () => {
 
     expect(screen.queryByText("Remaining:-$400")).toBeInTheDocument;
     expect(screen.queryByText("Spent so far: $500")).toBeInTheDocument;
-    //ADDING_TO_FAIL_TEST;
+    ADDING_TO_FAIL_TEST;
   });
 });
