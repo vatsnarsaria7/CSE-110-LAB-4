@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import ExpenseItem from "./ExpenseItem";
 import { AppContext } from "../../context/AppContext";
+import { createExpense } from "../../utils/expense-utils";
 const AddExpenseForm = () => {
   // Exercise: Consume the AppContext here
 
@@ -14,11 +15,20 @@ const AddExpenseForm = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Exercise: Add add new expense to expenses context array
-    setExpenses((prevExpenses) => [
-      ...prevExpenses,
-      { id: (expenses.length + 1).toString(), name, cost },
-    ]);
+    const maxId =
+      expenses.length > 0 ? Math.max(...expenses.map((e) => Number(e.id))) : 0;
+    const newId = (maxId + 1).toString();
+
+    const newExpense = {
+      id: newId.toString(), // Increment the counter and convert to string
+      description: name,
+      cost: cost,
+    };
+
+    createExpense(newExpense);
+
+    // Add new expense to expenses context array
+    setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
 
     setName("");
     setCost(0);
